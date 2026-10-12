@@ -130,6 +130,7 @@
       top: 0;
       z-index: 60;
       background: rgba(246, 244, 239, 0.94);
+      -webkit-backdrop-filter: blur(14px);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-hairline);
     }
@@ -1108,7 +1109,6 @@
   <!-- 1. Slim Utility Bar with Multi-Language & Multi-Currency Switcher -->
   <div class="utility-bar">
     <div class="utility-left">
-      <span class="perf-indicator"><span class="perf-dot"></span> EDGE i18n SSR <span id="ttfbLabel">0.9ms</span></span>
       <span id="announcementText">COMPLIMENTARY BESPOKE LASER ENGRAVING, WAX-SEALED GIFT NOTE &amp; EXPRESS SHIPPING ON ORDERS $75+</span>
     </div>
     <div class="utility-right">
@@ -1125,7 +1125,6 @@
         <option value="CAD">CAD (CA$)</option>
         <option value="GBP">GBP (£)</option>
       </select>
-      <a href="/admin" class="utility-admin-link">Admin (/admin)</a>
     </div>
   </div>
 
@@ -1984,13 +1983,10 @@
     }
 
     async function init() {
-      const t0 = performance.now();
       if (!STORE) {
         const res = await fetch('/api/store');
         STORE = await res.json();
       }
-      const elapsed = Math.max(0.7, (performance.now() - t0)).toFixed(1);
-      document.getElementById('ttfbLabel').textContent = `${elapsed}ms`;
       applyStoreConfig();
       checkPayPalReturn();
     }
