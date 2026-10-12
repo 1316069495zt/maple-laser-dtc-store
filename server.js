@@ -231,6 +231,8 @@ const server = http.createServer(async (req, res) => {
         badge: 'NEW ARRIVAL',
         customizable: true,
         stock: 50,
+        imageUrl: body.imageUrl || '/images/hero-board.jpg',
+        hoverImageUrl: body.imageUrl || '/images/board-butcher.jpg',
         shortDesc: body.shortDesc || 'Precision crafted custom laser-engraved item.',
         specs: ['Canadian Hard Maple / Custom Laser Engraved', 'Tracked Express Delivery'],
         svgType: 'cutting_board'
