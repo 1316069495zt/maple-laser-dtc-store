@@ -159,6 +159,23 @@ const server = http.createServer(async (req, res) => {
       return res.end(req.method === 'HEAD' ? undefined : ADMIN_HTML);
     }
 
+    // 2.5 Static Images under /images/ (with immutable browser cache)
+    if ((req.method === 'GET' || req.method === 'HEAD') && pathname.startsWith('/images/')) {
+      const safeName = path.basename(pathname);
+      const imgPath = path.join(__dirname, 'public', 'images', safeName);
+      if (fs.existsSync(imgPath)) {
+        const ext = path.extname(safeName).toLowerCase();
+        const mime = ext === '.png' ? 'image/png' : ext === '.webp' ? 'image/webp' : 'image/jpeg';
+        const buf = fs.readFileSync(imgPath);
+        res.writeHead(200, {
+          'Content-Type': mime,
+          'Content-Length': buf.length,
+          'Cache-Control': 'public, max-age=31536000, immutable'
+        });
+        return res.end(req.method === 'HEAD' ? undefined : buf);
+      }
+    }
+
     // 3. Public Store Config API
     if (req.method === 'GET' && pathname === '/api/store') {
       return sendJson(res, 200, db.store);
