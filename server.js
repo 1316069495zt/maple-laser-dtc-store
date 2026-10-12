@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 const { PRESETS } = require('./data/presets');
+const { I18N } = require('./data/i18n');
 
 // Load .env file if present
 const envPath = path.join(__dirname, '.env');
@@ -62,7 +63,7 @@ let cachedHomeHtml = '';
 let cachedHomeGzip = null;
 
 function rebuildEdgeCache() {
-  const scriptInjection = `<script>window.__INITIAL_STORE__ = ${JSON.stringify(db.store)};</script></head>`;
+  const scriptInjection = `<script>window.__INITIAL_STORE__ = ${JSON.stringify(db.store)}; window.__INITIAL_I18N__ = ${JSON.stringify(I18N)};</script></head>`;
   cachedHomeHtml = INDEX_TEMPLATE.replace('</head>', scriptInjection);
   cachedHomeGzip = zlib.gzipSync(Buffer.from(cachedHomeHtml, 'utf8'));
 }

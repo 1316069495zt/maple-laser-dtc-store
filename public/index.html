@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ATELIER NORD — Architectural Woodwork & Precision Laser Craft</title>
+  <title>ATELIER NORD — Architectural Woodwork &amp; Emotional Heirloom Craft</title>
   <style>
     :root {
       /* 60-30-10 Editorial Luxury Palette (Grovemade / Larch Wood / Kinfolk inspired) */
@@ -50,6 +50,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .utility-left {
       display: flex;
@@ -63,7 +65,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      opacity: 0.85;
+      opacity: 0.9;
     }
     .perf-dot {
       width: 5px;
@@ -74,7 +76,29 @@
     .utility-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
+    }
+    .lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-right: 1px solid rgba(255,255,255,0.18);
+      padding-right: 14px;
+    }
+    .lang-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #A8A29E;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 2px 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      color: #FFFFFF;
+      border-color: rgba(255,255,255,0.45);
     }
     .currency-picker {
       background: transparent;
@@ -119,15 +143,15 @@
     }
     .nav-left {
       display: flex;
-      gap: 32px;
+      gap: 28px;
       align-items: center;
     }
     .nav-left a, .nav-right-link {
       text-decoration: none;
       color: var(--text-charcoal);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       transition: color 0.2s;
     }
@@ -159,7 +183,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
     }
     .bag-trigger {
       background: transparent;
@@ -200,7 +224,7 @@
     }
     .hero-editorial h1 {
       font-family: var(--font-serif);
-      font-size: clamp(38px, 4.6vw, 64px);
+      font-size: clamp(36px, 4.4vw, 60px);
       font-weight: 400;
       line-height: 1.08;
       letter-spacing: -0.02em;
@@ -210,7 +234,7 @@
     .hero-editorial p {
       font-size: 16px;
       color: var(--text-charcoal);
-      max-width: 520px;
+      max-width: 540px;
       margin-bottom: 36px;
       font-weight: 400;
       line-height: 1.75;
@@ -264,7 +288,7 @@
     }
     .spec-col strong {
       font-family: var(--font-serif);
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 400;
       display: block;
       color: var(--text-ink);
@@ -306,7 +330,7 @@
       background: var(--bg-ivory);
       border: 1px solid var(--border-hairline);
       padding: 18px 22px;
-      max-width: 280px;
+      max-width: 300px;
       box-shadow: 0 20px 40px -15px rgba(24, 22, 21, 0.08);
     }
     .hero-floating-caption small {
@@ -320,10 +344,10 @@
     }
     .hero-floating-caption p {
       font-family: var(--font-serif);
-      font-size: 15px;
+      font-size: 14px;
       color: var(--text-ink);
       margin: 0;
-      line-height: 1.35;
+      line-height: 1.4;
     }
 
     /* 4. Editorial Press & Trust Strip */
@@ -358,7 +382,7 @@
       color: #8C857B;
     }
 
-    /* 5. Curated Category Trio (Grovemade Style) */
+    /* 5. Emotional Gifting Occasions Section */
     .section-wrap {
       max-width: 1400px;
       margin: 0 auto;
@@ -380,6 +404,11 @@
       font-weight: 400;
       letter-spacing: -0.015em;
     }
+    .section-head-sub {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 480px;
+    }
     .category-trio {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -388,13 +417,20 @@
     .cat-editorial-card {
       position: relative;
       overflow: hidden;
-      background: var(--bg-stone);
+      background: var(--bg-ivory);
+      border: 1px solid var(--border-hairline);
       cursor: pointer;
-      group: true;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s;
+    }
+    .cat-editorial-card:hover {
+      border-color: var(--text-ink);
     }
     .cat-editorial-img {
-      aspect-ratio: 4 / 4.6;
+      aspect-ratio: 4 / 3.4;
       overflow: hidden;
+      background: var(--bg-stone);
     }
     .cat-editorial-img img {
       width: 100%;
@@ -405,23 +441,33 @@
     .cat-editorial-card:hover .cat-editorial-img img {
       transform: scale(1.05);
     }
-    .cat-editorial-meta {
-      padding: 18px 0 4px;
-      background: var(--bg-linen);
+    .cat-editorial-body {
+      padding: 24px;
+      flex: 1;
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      flex-direction: column;
     }
-    .cat-editorial-meta h3 {
-      font-family: var(--font-serif);
-      font-size: 21px;
-      font-weight: 400;
-    }
-    .cat-editorial-meta span {
-      font-size: 11px;
-      letter-spacing: 0.14em;
+    .cat-tag-small {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--accent);
       text-transform: uppercase;
-      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .cat-editorial-body h3 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 10px;
+      color: var(--text-ink);
+    }
+    .cat-editorial-body p {
+      font-size: 13px;
+      color: var(--text-charcoal);
+      line-height: 1.6;
+      flex: 1;
     }
 
     /* 6. Product Collection Gallery */
@@ -589,15 +635,16 @@
       max-width: 1400px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 64px;
-      align-items: center;
+      align-items: start;
     }
     .atelier-stage {
       background: var(--bg-stone);
       border: 1px solid var(--border-hairline);
       padding: 36px;
-      position: relative;
+      position: sticky;
+      top: 100px;
     }
     .wood-canvas-wrapper {
       position: relative;
@@ -685,6 +732,31 @@
       text-transform: uppercase;
     }
 
+    /* Wax-Sealed Gift Card Preview Pill */
+    .wax-card-preview {
+      margin-top: 16px;
+      background: var(--bg-ivory);
+      border: 1px solid var(--border-hairline);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .wax-stamp-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #b84a32, #7c2413);
+      color: #f6e6d4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 13px;
+      box-shadow: inset 0 0 0 2px rgba(246, 230, 212, 0.25), 0 3px 8px rgba(124, 36, 19, 0.35);
+      flex-shrink: 0;
+    }
+
     /* Laser Pass Beam Simulation */
     .laser-beam-line {
       position: absolute;
@@ -707,10 +779,10 @@
     .atelier-controls > p {
       font-size: 14px;
       color: var(--text-muted);
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
     .ctrl-block {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .ctrl-label {
       font-size: 11px;
@@ -760,7 +832,7 @@
       display: grid;
       grid-template-columns: 0.85fr 1.15fr;
       gap: 12px;
-      margin-top: 26px;
+      margin-top: 24px;
     }
     .btn-sim-pass {
       background: transparent;
@@ -1003,6 +1075,9 @@
         grid-template-columns: 1fr;
         gap: 36px;
       }
+      .atelier-stage {
+        position: static;
+      }
       .editorial-product-grid, .category-trio {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -1030,20 +1105,27 @@
 </head>
 <body>
 
-  <!-- 1. Slim Utility Bar -->
+  <!-- 1. Slim Utility Bar with Multi-Language & Multi-Currency Switcher -->
   <div class="utility-bar">
     <div class="utility-left">
-      <span class="perf-indicator"><span class="perf-dot"></span> EDGE SSR <span id="ttfbLabel">1.1ms</span></span>
-      <span id="announcementText">COMPLIMENTARY BESPOKE LASER ENGRAVING &amp; INSURED EXPRESS SHIPPING ON ORDERS OVER $75</span>
+      <span class="perf-indicator"><span class="perf-dot"></span> EDGE i18n SSR <span id="ttfbLabel">0.9ms</span></span>
+      <span id="announcementText">COMPLIMENTARY BESPOKE LASER ENGRAVING, WAX-SEALED GIFT NOTE &amp; EXPRESS SHIPPING ON ORDERS $75+</span>
     </div>
     <div class="utility-right">
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn active" onclick="setLanguage('en', true)">EN</button>
+        <button class="lang-btn" onclick="setLanguage('de', true)">DE</button>
+        <button class="lang-btn" onclick="setLanguage('fr', true)">FR</button>
+        <button class="lang-btn" onclick="setLanguage('es', true)">ES</button>
+        <button class="lang-btn" onclick="setLanguage('it', true)">IT</button>
+      </div>
       <select id="currencySelect" class="currency-picker" onchange="changeCurrency(this.value)">
         <option value="USD">USD ($)</option>
-        <option value="CAD">CAD (CA$)</option>
         <option value="EUR">EUR (€)</option>
+        <option value="CAD">CAD (CA$)</option>
         <option value="GBP">GBP (£)</option>
       </select>
-      <a href="/admin" class="utility-admin-link">Store Admin (/admin)</a>
+      <a href="/admin" class="utility-admin-link">Admin (/admin)</a>
     </div>
   </div>
 
@@ -1051,10 +1133,10 @@
   <header>
     <div class="nav-wrap">
       <nav class="nav-left">
-        <a href="#catalog">Collection</a>
+        <a href="#catalog" id="navCollection">Collection</a>
+        <a href="#occasions" id="navOccasions">Gift Occasions</a>
         <a href="#customizer" id="navCustomizerLink">Bespoke Atelier</a>
-        <a href="#catalog" onclick="setCategory('laser-machines')">Laser Systems</a>
-        <a href="#story">Our Craft</a>
+        <a href="#story" id="navCraft">Our Craft</a>
       </nav>
 
       <a href="#" class="brand-center">
@@ -1063,9 +1145,9 @@
       </a>
 
       <div class="nav-right">
-        <a href="javascript:void(0)" class="nav-right-link" onclick="addTestCentItem()">$0.01 Live Test</a>
+        <a href="javascript:void(0)" class="nav-right-link" id="navLiveTest" onclick="addTestCentItem()">$0.01 Live Test</a>
         <button class="bag-trigger" onclick="toggleCart(true)">
-          Bag (<span id="cartCount">0</span>)
+          <span id="navBagLabel">Bag</span> (<span id="cartCount">0</span>)
         </button>
       </div>
     </div>
@@ -1074,27 +1156,27 @@
   <!-- 3. Split Editorial Hero -->
   <section class="hero-editorial">
     <div>
-      <span class="eyebrow" id="heroBadge">NORTH AMERICAN HARDWOOD • 0.06MM OPTICAL LASER PRECISION</span>
-      <h1 id="heroTitle">Tactile Objects of Permanence.</h1>
-      <p id="heroSubtitle">Kiln-dried Canadian Sugar Maple and American Black Walnut, individually finished by hand and deep-engraved to order in our workshop.</p>
+      <span class="eyebrow" id="heroBadge">NORTH AMERICAN HARDWOOD • HEIRLOOM EMOTIONAL CRAFT</span>
+      <h1 id="heroTitle">Carved With the Moments That Matter Most.</h1>
+      <p id="heroSubtitle">People forget generic gifts, but they never discard an heirloom carved with their family name, wedding date, or grandmother’s handwritten recipe. Handcrafted from kiln-dried Canadian Sugar Maple &amp; American Black Walnut.</p>
 
       <div class="hero-actions">
-        <a href="#customizer" class="btn-solid-ink" id="heroCtaPrimary">Bespoke Engraving Atelier</a>
-        <a href="#catalog" class="btn-outline-editorial" id="heroCtaSecondary">Explore Collection</a>
+        <a href="#customizer" class="btn-solid-ink" id="heroCtaPrimary">Create Your Heirloom Piece</a>
+        <a href="#catalog" class="btn-outline-editorial" id="heroCtaSecondary">Explore Gift Collection</a>
       </div>
 
       <div class="hero-specs-grid">
         <div class="spec-col">
-          <strong>0.06 mm</strong>
-          <span>Optical Laser Tolerance</span>
+          <strong id="spec1Title">5th Year</strong>
+          <span id="spec1Sub">Traditional Wood Anniversary</span>
         </div>
         <div class="spec-col">
-          <strong>100% Solid</strong>
-          <span>Canadian Sugar Maple</span>
+          <strong id="spec2Title">Free Gift Box</strong>
+          <span id="spec2Sub">Linen Wrap &amp; Wax-Sealed Note</span>
         </div>
         <div class="spec-col">
-          <strong>48 Hours</strong>
-          <span>Bespoke Studio Dispatch</span>
+          <strong id="spec3Title">48 Hours</strong>
+          <span id="spec3Sub">Bespoke Studio Dispatch</span>
         </div>
       </div>
     </div>
@@ -1104,8 +1186,8 @@
         <img id="heroMainImg" src="/images/hero-board.jpg" alt="Custom Engraved End-Grain Maple & Walnut Butcher Block" />
       </div>
       <div class="hero-floating-caption">
-        <small>No. 01 — Signature Edition</small>
-        <p>End-Grain Checkerboard Walnut &amp; Hard Maple with Corner Family Monogram.</p>
+        <small id="captionSmall">The Emotional Keepsake</small>
+        <p id="captionText">Every piece arrives in a linen presentation box with your custom wax-sealed dedication card.</p>
       </div>
     </div>
   </section>
@@ -1113,54 +1195,58 @@
   <!-- 4. Press & Editorial Recognition Strip -->
   <div class="press-strip">
     <div class="press-inner">
-      <span class="press-label">Recognized By</span>
+      <span class="press-label">Featured In</span>
       <div class="press-logos">
         <span>ARCHITECTURAL DIGEST</span>
         <span>DWELL</span>
         <span>WIRECUTTER</span>
-        <span>GEAR PATROL</span>
         <span>MONOCLE</span>
+        <span>VOGUE LIVING</span>
       </div>
     </div>
   </div>
 
-  <!-- 5. Curated Category Trio -->
-  <section class="section-wrap" style="padding-bottom: 20px;">
+  <!-- 5. Emotional Gifting Occasions Trio (Why Western Buyers Pay High Premiums) -->
+  <section class="section-wrap" id="occasions" style="padding-bottom: 16px;">
     <div class="section-head-split">
       <div>
-        <span class="eyebrow">Curated Disciplines</span>
-        <h2>Crafted for the Table, Desk &amp; Studio</h2>
+        <span class="eyebrow" id="occEyebrow">Emotional Gifting Rituals</span>
+        <h2 id="occTitle">Crafted for Life’s Milestone Chapters</h2>
       </div>
+      <p class="section-head-sub" id="occSubtitle">In North America and Europe, solid wood is the traditional symbol of deep roots, permanence, and warmth.</p>
     </div>
 
     <div class="category-trio">
-      <div class="cat-editorial-card" onclick="setCategory('custom-gifts'); document.getElementById('catalog').scrollIntoView({behavior:'smooth'});">
+      <div class="cat-editorial-card" onclick="applyOccasionPreset('anniversary')">
         <div class="cat-editorial-img">
-          <img src="/images/board-monogram.jpg" alt="Heirloom Kitchen & Tableware" />
+          <img src="/images/board-monogram.jpg" alt="5th Wood Anniversary & Wedding Gift" />
         </div>
-        <div class="cat-editorial-meta">
-          <h3>01 / Kitchen &amp; Tableware</h3>
-          <span>Explore →</span>
+        <div class="cat-editorial-body">
+          <span class="cat-tag-small" id="occCard1Tag">01 / 5TH ANNIVERSARY &amp; WEDDINGS</span>
+          <h3 id="occCard1Title">The “Wood Anniversary” &amp; Union Seal</h3>
+          <p id="occCard1Desc">Celebrate five years of marriage or a new union with their shared surname and wedding date deep-carved into solid maple.</p>
         </div>
       </div>
 
-      <div class="cat-editorial-card" onclick="setCategory('barware'); document.getElementById('catalog').scrollIntoView({behavior:'smooth'});">
+      <div class="cat-editorial-card" onclick="applyOccasionPreset('newhome')">
         <div class="cat-editorial-img">
-          <img src="/images/whiskey-box.jpg" alt="Whiskey Vaults & Executive Desk" />
+          <img src="/images/hero-board.jpg" alt="First Home & Family Coordinates" />
         </div>
-        <div class="cat-editorial-meta">
-          <h3>02 / Barware &amp; Desk Objects</h3>
-          <span>Explore →</span>
+        <div class="cat-editorial-body">
+          <span class="cat-tag-small" id="occCard2Tag">02 / NEW HOME &amp; FAMILY HEARTH</span>
+          <h3 id="occCard2Title">The First Home &amp; Coordinates Keepsake</h3>
+          <p id="occCard2Desc">Mark the coordinates of a first home or family cabin—an emotional centerpiece that anchors the kitchen for decades.</p>
         </div>
       </div>
 
-      <div class="cat-editorial-card" onclick="setCategory('laser-machines'); document.getElementById('catalog').scrollIntoView({behavior:'smooth'});">
+      <div class="cat-editorial-card" onclick="applyOccasionPreset('legacy')">
         <div class="cat-editorial-img">
-          <img src="/images/laser-pro.jpg" alt="Precision Studio Laser Systems" />
+          <img src="/images/whiskey-box.jpg" alt="Private Reserve Whiskey Vault" />
         </div>
-        <div class="cat-editorial-meta">
-          <h3>03 / Studio Laser Systems</h3>
-          <span>Explore →</span>
+        <div class="cat-editorial-body">
+          <span class="cat-tag-small" id="occCard3Tag">03 / LEGACY &amp; FATHER'S RESERVE</span>
+          <h3 id="occCard3Title">Private Reserve Whiskey &amp; Studio Objects</h3>
+          <p id="occCard3Desc">Monogrammed smoked-oak whiskey vaults and solid brass desk pieces for retirements, best men, and milestones.</p>
         </div>
       </div>
     </div>
@@ -1170,8 +1256,8 @@
   <section class="section-wrap" id="catalog">
     <div class="section-head-split">
       <div>
-        <span class="eyebrow">Workshop Archive</span>
-        <h2>Featured Objects &amp; Instruments</h2>
+        <span class="eyebrow" id="catEyebrow">Workshop Archive</span>
+        <h2 id="catTitle">Heirloom Objects &amp; Studio Instruments</h2>
       </div>
       <div class="filter-pills" id="categoryTabs"></div>
     </div>
@@ -1179,7 +1265,7 @@
     <div class="editorial-product-grid" id="productGrid"></div>
   </section>
 
-  <!-- 7. Photo-Real Bespoke Laser Engraving Atelier -->
+  <!-- 7. Photo-Real Bespoke Laser Engraving Atelier + Wax-Sealed Emotional Gift Note -->
   <section class="atelier-section" id="customizer">
     <div class="atelier-inner">
       <div class="atelier-stage">
@@ -1195,54 +1281,69 @@
               </svg>
               <div class="burn-line1" id="previewLine1">MARTINEZ</div>
               <div class="burn-divider"></div>
-              <div class="burn-line2" id="previewLine2">EST. 2026 • MONTREAL</div>
+              <div class="burn-line2" id="previewLine2">5TH WOOD ANNIVERSARY • 2026</div>
             </div>
           </div>
         </div>
+
         <div style="display:flex; justify-content:space-between; margin-top:14px; font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase;">
           <span id="laserStatusText">0.4MM DEEP CHAR-SEALED PYROGRAPHY PREVIEW</span>
-          <span>SCALE 1:1 PROOF</span>
+          <span id="scaleLabelText">COMPLIMENTARY GIFT BOX INCLUDED</span>
+        </div>
+
+        <!-- Live Wax-Sealed Gift Note Preview -->
+        <div class="wax-card-preview">
+          <div class="wax-stamp-circle">AN</div>
+          <div style="font-size:12px; color:var(--text-charcoal);">
+            <strong style="display:block; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent);">Wax-Sealed Linen Envelope Included</strong>
+            <span id="previewGiftNote" style="font-family:var(--font-serif); font-style:italic;">“To five years of building our home together. Forever &amp; always.”</span>
+          </div>
         </div>
       </div>
 
       <!-- Customizer Controls -->
       <div class="atelier-controls">
-        <span class="eyebrow">Bespoke Personalization</span>
-        <h3>Composing Your Heirloom Piece</h3>
-        <p>Select your timber species, engraving placement, and family dedication. Every piece is deep-carved via 455nm optical laser and hand-rubbed with organic beeswax.</p>
+        <span class="eyebrow" id="atEyebrow">Bespoke Personalization Studio</span>
+        <h3 id="atTitle">Composing Your Emotional Keepsake</h3>
+        <p id="atSubtitle">Preview your family seal in real time on genuine hardwood. Every order includes complimentary linen gift wrapping and a wax-sealed handwritten message card.</p>
 
         <div class="ctrl-block">
-          <span class="ctrl-label">01 / Timber &amp; Substrate</span>
+          <span class="ctrl-label" id="atStep1">01 / Timber &amp; Substrate</span>
           <div class="option-grid-4" id="materialOptions">
-            <button class="opt-tile active" onclick="selectMaterial('maple', this)">Canadian Sugar Maple ($118)</button>
-            <button class="opt-tile" onclick="selectMaterial('walnut', this)">American Black Walnut ($134)</button>
-            <button class="opt-tile" onclick="selectMaterial('cherry', this)">Appalachian Cherry ($124)</button>
-            <button class="opt-tile" onclick="selectMaterial('slate', this)">Honed Nero Slate ($88)</button>
+            <button class="opt-tile active" id="btnMatMaple" onclick="selectMaterial('maple', this)">Canadian Sugar Maple ($118)</button>
+            <button class="opt-tile" id="btnMatWalnut" onclick="selectMaterial('walnut', this)">American Black Walnut ($134)</button>
+            <button class="opt-tile" id="btnMatCherry" onclick="selectMaterial('cherry', this)">Appalachian Cherry ($124)</button>
+            <button class="opt-tile" id="btnMatSlate" onclick="selectMaterial('slate', this)">Honed Nero Slate ($88)</button>
           </div>
         </div>
 
         <div class="ctrl-block">
-          <span class="ctrl-label">02 / Engraving Placement &amp; Crest</span>
+          <span class="ctrl-label" id="atStep2">02 / Occasion &amp; Engraving Placement</span>
           <div class="option-grid-4" id="placementOptions">
-            <button class="opt-tile active" onclick="selectPlacement('center', this)">Center Medallion Seal</button>
-            <button class="opt-tile" onclick="selectPlacement('corner', this)">Bottom-Right Corner Stamp</button>
+            <button class="opt-tile active" id="btnPosCenter" onclick="selectPlacement('center', this)">Center Medallion Seal</button>
+            <button class="opt-tile" id="btnPosCorner" onclick="selectPlacement('corner', this)">Bottom-Right Corner Stamp</button>
           </div>
         </div>
 
         <div class="ctrl-block">
-          <span class="ctrl-label">03 / Family Name or Monogram</span>
+          <span class="ctrl-label" id="atStep3">03 / Family Name, Couple or Monogram</span>
           <input type="text" id="inputLine1" class="editorial-input" value="MARTINEZ" maxlength="24" oninput="updateCustomPreview()" />
         </div>
 
         <div class="ctrl-block">
-          <span class="ctrl-label">04 / Established Date or Coordinates</span>
-          <input type="text" id="inputLine2" class="editorial-input" value="EST. 2026 • MONTREAL" maxlength="34" oninput="updateCustomPreview()" />
+          <span class="ctrl-label" id="atStep4">04 / Milestone Date, Coordinates or Quote</span>
+          <input type="text" id="inputLine2" class="editorial-input" value="5TH WOOD ANNIVERSARY • 2026" maxlength="34" oninput="updateCustomPreview()" />
+        </div>
+
+        <div class="ctrl-block">
+          <span class="ctrl-label" id="atStep5">05 / Complimentary Wax-Sealed Gift Note (Emotional Touch)</span>
+          <input type="text" id="inputGiftNote" class="editorial-input" value="To five years of building our home together. Forever & always." maxlength="90" oninput="updateCustomPreview()" />
         </div>
 
         <div class="atelier-btn-row">
-          <button class="btn-sim-pass" onclick="runLaserSimulation()">Simulate Laser Burn</button>
+          <button class="btn-sim-pass" id="btnSimPass" onclick="runLaserSimulation()">Simulate Laser Burn</button>
           <button class="btn-solid-ink" onclick="addCustomPieceToCart()">
-            Commission Piece — <span id="customPriceLabel">$118.00</span>
+            <span id="btnCommissionText">Commission Heirloom Piece</span> — <span id="customPriceLabel">$118.00</span>
           </button>
         </div>
       </div>
@@ -1255,10 +1356,10 @@
       <img src="/images/grovemade-desk.jpg" alt="Atelier Nord Studio Craftsmanship" />
     </div>
     <div class="story-copy">
-      <span class="eyebrow">Material Integrity</span>
-      <h2>Why We Never Compromise on Solid North American Timber.</h2>
-      <p>Unlike mass-produced bamboo boards glued with formaldehyde resins, every Atelier Nord piece begins as rough-sawn, FSC-certified Canadian Hard Maple or American Black Walnut cured to 7% equilibrium moisture.</p>
-      <p>Our dual-stage optical laser pyrography vaporizes wood fibers to a precise 0.40mm relief depth before three coats of warm organic beeswax and fractionated coconut oil lock in the grain for generations.</p>
+      <span class="eyebrow" id="storyEyebrow">Why Emotional Craft Matters</span>
+      <h2 id="storyTitle">An Object With a Soul Never Ends Up in a Drawer.</h2>
+      <p id="storyP1">In an era of disposable mass production, a piece of solid 80-year-old Canadian Sugar Maple engraved with a family’s story carries irreplaceable emotional weight.</p>
+      <p id="storyP2">Our dual-stage optical laser pyrography vaporizes wood fibers to a tactile 0.40mm relief depth before three coats of warm organic beeswax lock in the grain for generations.</p>
     </div>
   </section>
 
@@ -1266,7 +1367,7 @@
   <div class="drawer-backdrop" id="cartBackdrop" onclick="if(event.target===this) toggleCart(false)">
     <div class="bag-drawer">
       <div class="bag-header">
-        <h3>Your Bag</h3>
+        <h3 id="bagTitle">Your Shopping Bag</h3>
         <button class="bag-close" onclick="toggleCart(false)">✕</button>
       </div>
 
@@ -1274,7 +1375,7 @@
         <div id="cartItemsList"></div>
 
         <div class="bag-ship-box">
-          <h4>Dispatch Destination</h4>
+          <h4 id="bagDestLabel">Dispatch Destination</h4>
           <div class="ship-grid">
             <input type="text" id="shipName" class="editorial-input" placeholder="Full Name" value="Alex Carter" />
             <input type="email" id="shipEmail" class="editorial-input" placeholder="Email" value="buyer@example.com" />
@@ -1289,22 +1390,22 @@
 
       <div class="bag-footer">
         <div class="sum-row">
-          <span>Subtotal</span>
+          <span id="bagSubtotalLabel">Subtotal</span>
           <span id="cartSubtotal">$0.00</span>
         </div>
         <div class="sum-row">
-          <span>Insured Express Courier</span>
+          <span id="bagShippingLabel">Insured Express Courier + Linen Gift Box</span>
           <span id="cartShipping">COMPLIMENTARY</span>
         </div>
         <div class="sum-total">
-          <span>Total</span>
+          <span id="bagTotalLabel">Total</span>
           <span id="cartTotal">$0.00</span>
         </div>
 
         <button class="btn-paypal-gold" id="btnPayPalCheckout" onclick="startPayPalCheckout()">
           Pay with PayPal
         </button>
-        <button class="btn-instant-test" onclick="submitInstantTestOrder()">
+        <button class="btn-instant-test" id="btnInstantTest" onclick="submitInstantTestOrder()">
           Instant Studio Test Order (Direct to /admin)
         </button>
       </div>
@@ -1315,7 +1416,7 @@
 
   <footer>
     <div class="footer-inner">
-      <div>© 2026 <span id="footerBrand">ATELIER NORD</span>. Architectural Woodwork &amp; Laser Craft.</div>
+      <div>© 2026 <span id="footerBrand">ATELIER NORD</span>. Architectural Woodwork &amp; Emotional Heirloom Craft.</div>
       <div>
         <a href="/admin" style="color:#E7E3DC; text-decoration:none; border-bottom:1px solid #78716A;">Store Admin &amp; Theme Switcher (/admin)</a>
       </div>
@@ -1324,12 +1425,15 @@
 
   <script>
     let STORE = window.__INITIAL_STORE__ || null;
+    let I18N_DICT = window.__INITIAL_I18N__ || {};
+    let currentLang = localStorage.getItem('an_lang') || '';
     let activeCategory = 'all';
-    let currentCurrency = 'USD';
+    let currentCurrency = localStorage.getItem('an_curr') || 'USD';
+
     const RATES = {
       USD: { sym: '$', rate: 1 },
-      CAD: { sym: 'CA$', rate: 1.36 },
       EUR: { sym: '€', rate: 0.92 },
+      CAD: { sym: 'CA$', rate: 1.36 },
       GBP: { sym: '£', rate: 0.79 }
     };
 
@@ -1339,10 +1443,166 @@
       price: 118.00,
       placement: 'center',
       line1: 'MARTINEZ',
-      line2: 'EST. 2026 • MONTREAL'
+      line2: '5TH WOOD ANNIVERSARY • 2026',
+      giftNote: 'To five years of building our home together. Forever & always.'
     };
 
     let cart = JSON.parse(localStorage.getItem('mc_cart') || '[]');
+
+    function detectInitialLocale() {
+      if (currentLang && I18N_DICT[currentLang]) return;
+      const navLang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+      if (['de', 'fr', 'es', 'it'].includes(navLang)) {
+        currentLang = navLang;
+        currentCurrency = 'EUR';
+      } else {
+        currentLang = 'en';
+      }
+    }
+
+    function tObj() {
+      return I18N_DICT[currentLang] || I18N_DICT['en'] || {};
+    }
+
+    function setLanguage(lang, autoPairCurrency) {
+      if (!I18N_DICT[lang]) lang = 'en';
+      currentLang = lang;
+      localStorage.setItem('an_lang', lang);
+      document.documentElement.lang = lang;
+
+      document.querySelectorAll('#langSwitcher .lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      });
+
+      const dict = tObj();
+      if (autoPairCurrency && dict.defaultCurrency) {
+        currentCurrency = dict.defaultCurrency;
+        localStorage.setItem('an_curr', currentCurrency);
+        document.getElementById('currencySelect').value = currentCurrency;
+      }
+
+      applyTranslations();
+      renderCategories();
+      renderCatalog();
+      renderCart();
+    }
+
+    function applyTranslations() {
+      const d = tObj();
+      if (!d.nav) return;
+
+      document.getElementById('announcementText').textContent = d.announcement || STORE.announcement;
+      document.getElementById('navCollection').textContent = d.nav.collection;
+      document.getElementById('navOccasions').textContent = d.nav.occasions;
+      document.getElementById('navCustomizerLink').textContent = d.nav.atelier;
+      document.getElementById('navCraft').textContent = d.nav.craft;
+      document.getElementById('navLiveTest').textContent = d.nav.liveTest;
+      document.getElementById('navBagLabel').textContent = d.nav.bag;
+
+      if (d.hero) {
+        document.getElementById('heroBadge').textContent = d.hero.badge;
+        document.getElementById('heroTitle').textContent = d.hero.title;
+        document.getElementById('heroSubtitle').textContent = d.hero.subtitle;
+        document.getElementById('heroCtaPrimary').textContent = d.hero.ctaPrimary;
+        document.getElementById('heroCtaSecondary').textContent = d.hero.ctaSecondary;
+        document.getElementById('spec1Title').textContent = d.hero.spec1Title;
+        document.getElementById('spec1Sub').textContent = d.hero.spec1Sub;
+        document.getElementById('spec2Title').textContent = d.hero.spec2Title;
+        document.getElementById('spec2Sub').textContent = d.hero.spec2Sub;
+        document.getElementById('spec3Title').textContent = d.hero.spec3Title;
+        document.getElementById('spec3Sub').textContent = d.hero.spec3Sub;
+        document.getElementById('captionSmall').textContent = d.hero.captionSmall;
+        document.getElementById('captionText').textContent = d.hero.captionText;
+      }
+
+      if (d.occasions) {
+        document.getElementById('occEyebrow').textContent = d.occasions.eyebrow;
+        document.getElementById('occTitle').textContent = d.occasions.title;
+        document.getElementById('occSubtitle').textContent = d.occasions.subtitle;
+        document.getElementById('occCard1Tag').textContent = d.occasions.card1Tag;
+        document.getElementById('occCard1Title').textContent = d.occasions.card1Title;
+        document.getElementById('occCard1Desc').textContent = d.occasions.card1Desc;
+        document.getElementById('occCard2Tag').textContent = d.occasions.card2Tag;
+        document.getElementById('occCard2Title').textContent = d.occasions.card2Title;
+        document.getElementById('occCard2Desc').textContent = d.occasions.card2Desc;
+        document.getElementById('occCard3Tag').textContent = d.occasions.card3Tag;
+        document.getElementById('occCard3Title').textContent = d.occasions.card3Title;
+        document.getElementById('occCard3Desc').textContent = d.occasions.card3Desc;
+      }
+
+      if (d.catalog) {
+        document.getElementById('catEyebrow').textContent = d.catalog.eyebrow;
+        document.getElementById('catTitle').textContent = d.catalog.title;
+      }
+
+      if (d.atelier) {
+        document.getElementById('atEyebrow').textContent = d.atelier.eyebrow;
+        document.getElementById('atTitle').textContent = d.atelier.title;
+        document.getElementById('atSubtitle').textContent = d.atelier.subtitle;
+        document.getElementById('atStep1').textContent = d.atelier.step1;
+        document.getElementById('btnMatMaple').textContent = d.atelier.matMaple;
+        document.getElementById('btnMatWalnut').textContent = d.atelier.matWalnut;
+        document.getElementById('btnMatCherry').textContent = d.atelier.matCherry;
+        document.getElementById('btnMatSlate').textContent = d.atelier.matSlate;
+        document.getElementById('atStep2').textContent = d.atelier.step2;
+        document.getElementById('btnPosCenter').textContent = d.atelier.posCenter;
+        document.getElementById('btnPosCorner').textContent = d.atelier.posCorner;
+        document.getElementById('atStep3').textContent = d.atelier.step3;
+        document.getElementById('atStep4').textContent = d.atelier.step4;
+        document.getElementById('atStep5').textContent = d.atelier.step5;
+        document.getElementById('inputGiftNote').placeholder = d.atelier.giftNotePlaceholder;
+        document.getElementById('btnSimPass').textContent = d.atelier.simBtn;
+        document.getElementById('btnCommissionText').textContent = d.atelier.commissionBtn;
+        document.getElementById('laserStatusText').textContent = d.atelier.proofLabel;
+        document.getElementById('scaleLabelText').textContent = d.atelier.scaleLabel;
+      }
+
+      if (d.story) {
+        document.getElementById('storyEyebrow').textContent = d.story.eyebrow;
+        document.getElementById('storyTitle').textContent = d.story.title;
+        document.getElementById('storyP1').textContent = d.story.p1;
+        document.getElementById('storyP2').textContent = d.story.p2;
+      }
+
+      if (d.bag) {
+        document.getElementById('bagTitle').textContent = d.bag.title;
+        document.getElementById('bagDestLabel').textContent = d.bag.destination;
+        document.getElementById('bagSubtotalLabel').textContent = d.bag.subtotal;
+        document.getElementById('bagShippingLabel').textContent = d.bag.shipping;
+        document.getElementById('bagTotalLabel').textContent = d.bag.total;
+        document.getElementById('btnPayPalCheckout').textContent = d.bag.paypalBtn;
+        document.getElementById('btnInstantTest').textContent = d.bag.testBtn;
+      }
+
+      document.getElementById('customPriceLabel').textContent = formatMoney(customState.price);
+    }
+
+    function applyOccasionPreset(type) {
+      const presets = {
+        anniversary: {
+          l1: 'THE MILLER FAMILY',
+          l2: '5TH WOOD ANNIVERSARY • OCT 12',
+          note: 'Five years of strong roots and warm memories. Happy Wood Anniversary, my love.'
+        },
+        newhome: {
+          l1: 'THE ANDERSON HEARTH',
+          l2: '45.5017° N, 73.5673° W • FIRST HOME',
+          note: 'May this kitchen always be filled with warm bread, good wine, and laughter.'
+        },
+        legacy: {
+          l1: 'HARRISON PRIVATE RESERVE',
+          l2: 'AGED TO PERFECTION • EST. 1986',
+          note: 'Raise a glass to a lifetime of wisdom, craftsmanship, and character.'
+        }
+      };
+      const p = presets[type] || presets.anniversary;
+      document.getElementById('inputLine1').value = p.l1;
+      document.getElementById('inputLine2').value = p.l2;
+      document.getElementById('inputGiftNote').value = p.note;
+      updateCustomPreview();
+      document.getElementById('customizer').scrollIntoView({ behavior: 'smooth' });
+      runLaserSimulation();
+    }
 
     function formatMoney(usdAmount) {
       const c = RATES[currentCurrency] || RATES.USD;
@@ -1352,6 +1612,7 @@
 
     function changeCurrency(curr) {
       currentCurrency = curr;
+      localStorage.setItem('an_curr', curr);
       renderCatalog();
       renderCart();
       document.getElementById('customPriceLabel').textContent = formatMoney(customState.price);
@@ -1368,22 +1629,12 @@
     function applyStoreConfig() {
       if (!STORE) return;
       document.documentElement.style.setProperty('--accent', STORE.accentColor || '#9E3B24');
-
-      document.title = `${STORE.brandName} — ${STORE.brandTagline}`;
-      document.getElementById('announcementText').textContent = STORE.announcement;
       document.getElementById('brandLogoText').textContent = STORE.brandLogoText || STORE.brandName;
       document.getElementById('brandSubText').textContent = STORE.brandTagline;
       document.getElementById('footerBrand').textContent = STORE.brandName;
 
-      if (STORE.hero) {
-        document.getElementById('heroBadge').textContent = STORE.hero.badge;
-        document.getElementById('heroTitle').textContent = STORE.hero.title;
-        document.getElementById('heroSubtitle').textContent = STORE.hero.subtitle;
-        document.getElementById('heroCtaPrimary').textContent = STORE.hero.ctaPrimary;
-        document.getElementById('heroCtaSecondary').textContent = STORE.hero.ctaSecondary;
-        if (STORE.hero.heroImage) {
-          document.getElementById('heroMainImg').src = STORE.hero.heroImage;
-        }
+      if (STORE.hero && STORE.hero.heroImage) {
+        document.getElementById('heroMainImg').src = STORE.hero.heroImage;
       }
 
       const customizerSec = document.getElementById('customizer');
@@ -1396,17 +1647,18 @@
         navCustLink.style.display = 'inline';
       }
 
-      renderCategories();
-      renderCatalog();
-      renderCart();
+      detectInitialLocale();
+      document.getElementById('currencySelect').value = currentCurrency;
+      setLanguage(currentLang, false);
     }
 
     function renderCategories() {
       const container = document.getElementById('categoryTabs');
       const cats = STORE.categories || [{ id: 'all', name: 'All Objects' }];
+      const locCats = (tObj().catalog && tObj().catalog.categories) || {};
       container.innerHTML = cats.map(c => `
         <button class="filter-btn ${activeCategory === c.id ? 'active' : ''}" onclick="setCategory('${c.id}')">
-          ${c.name}
+          ${locCats[c.id] || c.name}
         </button>
       `).join('');
     }
@@ -1420,31 +1672,40 @@
     function renderCatalog() {
       const grid = document.getElementById('productGrid');
       const list = (STORE.products || []).filter(p => activeCategory === 'all' || p.category === activeCategory);
+      const d = tObj();
+      const prodLocMap = d.products || {};
+      const addLabel = (d.catalog && d.catalog.addToBag) || '+ Add to Bag';
 
       grid.innerHTML = list.map(p => {
+        const loc = prodLocMap[p.id] || {};
+        const title = loc.title || p.title;
+        const subtitle = loc.subtitle || p.subtitle || 'Handcrafted in North America';
+        const shortDesc = loc.shortDesc || p.shortDesc || '';
+        const badge = loc.badge || p.badge;
         const mainImg = p.imageUrl || '/images/hero-board.jpg';
         const hoverImg = p.hoverImageUrl || mainImg;
+
         return `
           <article class="prod-card">
             <div class="prod-media">
-              ${p.badge ? `<span class="prod-tag">${p.badge}</span>` : ''}
-              <img class="main-img" src="${mainImg}" alt="${p.title}" loading="lazy" />
-              <img class="hover-img" src="${hoverImg}" alt="${p.title}" loading="lazy" />
+              ${badge ? `<span class="prod-tag">${badge}</span>` : ''}
+              <img class="main-img" src="${mainImg}" alt="${title}" loading="lazy" />
+              <img class="hover-img" src="${hoverImg}" alt="${title}" loading="lazy" />
               <button class="quick-add-bar" onclick="addToCart('${p.id}')">
-                + Add to Bag — ${formatMoney(p.price)}
+                ${addLabel} — ${formatMoney(p.price)}
               </button>
             </div>
             <div class="prod-info-top">
-              <h3 class="prod-name">${p.title}</h3>
+              <h3 class="prod-name">${title}</h3>
               <div class="prod-price-wrap">
                 ${formatMoney(p.price)}
                 ${p.compareAtPrice ? `<span class="prod-price-compare">${formatMoney(p.compareAtPrice)}</span>` : ''}
               </div>
             </div>
-            <div class="prod-subtitle">${p.subtitle || 'Handcrafted in North America'}</div>
-            <p class="prod-desc-short">${p.shortDesc || ''}</p>
+            <div class="prod-subtitle">${subtitle}</div>
+            <p class="prod-desc-short">${shortDesc}</p>
             <button class="prod-mobile-btn" onclick="addToCart('${p.id}')">
-              Add to Bag
+              ${addLabel}
             </button>
           </article>
         `;
@@ -1488,10 +1749,13 @@
     function updateCustomPreview() {
       const l1 = document.getElementById('inputLine1').value || 'MARTINEZ';
       const l2 = document.getElementById('inputLine2').value || '';
+      const note = document.getElementById('inputGiftNote').value || '';
       customState.line1 = l1;
       customState.line2 = l2;
+      customState.giftNote = note;
       document.getElementById('previewLine1').textContent = l1.toUpperCase();
       document.getElementById('previewLine2').textContent = l2.toUpperCase();
+      document.getElementById('previewGiftNote').textContent = note ? `“${note}”` : 'Complimentary linen gift box included.';
     }
 
     function runLaserSimulation() {
@@ -1509,36 +1773,39 @@
         if (step >= 60) {
           clearInterval(window._laserTimer);
           beam.style.display = 'none';
-          status.textContent = '0.4MM DEEP CHAR-SEALED PYROGRAPHY COMPLETE';
+          status.textContent = (tObj().atelier && tObj().atelier.proofLabel) || '0.4MM DEEP CHAR-SEALED PYROGRAPHY COMPLETE';
         }
       }, 22);
     }
 
     function addCustomPieceToCart() {
+      const notePart = customState.giftNote ? ` | Wax Gift Note: "${customState.giftNote}"` : '';
       const item = {
         id: 'custom-' + Date.now(),
-        title: `Bespoke ${customState.materialName} Butcher Block`,
+        title: `Bespoke ${customState.materialName} Heirloom Block`,
         imageUrl: '/images/wood-grain-blank.jpg',
         price: customState.price,
         qty: 1,
-        customSpec: `${customState.materialName} • ${customState.placement.toUpperCase()} SEAL • "${customState.line1}" / "${customState.line2}"`
+        customSpec: `[${currentLang.toUpperCase()}] ${customState.materialName} • ${customState.placement.toUpperCase()} SEAL • "${customState.line1}" / "${customState.line2}"${notePart}`
       };
       cart.push(item);
       saveCart();
       toggleCart(true);
-      showToast('Added bespoke engraved piece to your bag.');
+      showToast('Added bespoke heirloom & wax-sealed gift note to bag.');
     }
 
     function addToCart(productId) {
       const prod = (STORE.products || []).find(p => p.id === productId);
       if (!prod) return;
+      const loc = (tObj().products && tObj().products[prod.id]) || {};
+      const title = loc.title || prod.title;
       const existing = cart.find(i => i.id === prod.id && !i.customSpec);
       if (existing) {
         existing.qty += 1;
       } else {
         cart.push({
           id: prod.id,
-          title: prod.title,
+          title,
           imageUrl: prod.imageUrl || '/images/hero-board.jpg',
           price: prod.price,
           qty: 1,
@@ -1547,7 +1814,7 @@
       }
       saveCart();
       toggleCart(true);
-      showToast(`Added "${prod.title}" to your bag.`);
+      showToast(`Added "${title}" to bag.`);
     }
 
     function addTestCentItem() {
@@ -1561,7 +1828,7 @@
       }];
       saveCart();
       toggleCart(true);
-      showToast('Added $0.01 live verification item to your bag.');
+      showToast('Added $0.01 live verification item to bag.');
     }
 
     function changeQty(idx, delta) {
@@ -1591,10 +1858,13 @@
     function renderCart() {
       const count = cart.reduce((s, i) => s + i.qty, 0);
       document.getElementById('cartCount').textContent = count;
+      const d = tObj();
+      const emptyText = (d.bag && d.bag.empty) || 'Your bag is currently empty.';
+      const compText = (d.bag && d.bag.complimentary) || 'COMPLIMENTARY';
 
       const listEl = document.getElementById('cartItemsList');
       if (cart.length === 0) {
-        listEl.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:40px 0; font-family:var(--font-serif); font-size:17px;">Your bag is currently empty.</p>`;
+        listEl.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:40px 0; font-family:var(--font-serif); font-size:17px;">${emptyText}</p>`;
       } else {
         listEl.innerHTML = cart.map((item, idx) => `
           <div class="bag-item">
@@ -1617,7 +1887,7 @@
 
       const totals = getCartTotals();
       document.getElementById('cartSubtotal').textContent = formatMoney(totals.subtotal);
-      document.getElementById('cartShipping').textContent = totals.shipping === 0 ? 'COMPLIMENTARY' : formatMoney(totals.shipping);
+      document.getElementById('cartShipping').textContent = totals.shipping === 0 ? compText : formatMoney(totals.shipping);
       document.getElementById('cartTotal').textContent = formatMoney(totals.total);
     }
 
