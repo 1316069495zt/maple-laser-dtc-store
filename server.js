@@ -136,7 +136,7 @@ const server = http.createServer(async (req, res) => {
 
   try {
     // 1. Storefront Home (Served from In-Memory SSR Edge Cache in < 1ms)
-    if (req.method === 'GET' && (pathname === '/' || pathname === '/index.html')) {
+    if ((req.method === 'GET' || req.method === 'HEAD') && (pathname === '/' || pathname === '/index.html')) {
       const acceptEncoding = req.headers['accept-encoding'] || '';
       if (acceptEncoding.includes('gzip') && cachedHomeGzip) {
         res.writeHead(200, {
@@ -144,19 +144,19 @@ const server = http.createServer(async (req, res) => {
           'Content-Encoding': 'gzip',
           'X-Edge-Cache': 'HIT-MEMORY-SSR'
         });
-        return res.end(cachedHomeGzip);
+        return res.end(req.method === 'HEAD' ? undefined : cachedHomeGzip);
       }
       res.writeHead(200, {
         'Content-Type': 'text/html; charset=utf-8',
         'X-Edge-Cache': 'HIT-MEMORY-SSR'
       });
-      return res.end(cachedHomeHtml);
+      return res.end(req.method === 'HEAD' ? undefined : cachedHomeHtml);
     }
 
     // 2. Visual Admin Console (/admin)
-    if (req.method === 'GET' && (pathname === '/admin' || pathname === '/admin/')) {
+    if ((req.method === 'GET' || req.method === 'HEAD') && (pathname === '/admin' || pathname === '/admin/')) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      return res.end(ADMIN_HTML);
+      return res.end(req.method === 'HEAD' ? undefined : ADMIN_HTML);
     }
 
     // 3. Public Store Config API
