@@ -183,10 +183,21 @@
       ⚙️ 跨境独立站可视化中台
       <span class="badge-fast">⚡ 内存级缓存已开启 • 响应 &lt; 2ms</span>
     </h1>
-    <a href="/" class="btn-view-store">👉 返回前台查看独立站效果</a>
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+      <a id="btnOpenRadarSite" href="/radar/" target="_blank" rel="noopener" class="btn-view-store" style="background:#0284c7;">📡 打开选品地图网站 (Opportunity Radar) ↗</a>
+      <a href="/" class="btn-view-store">👉 返回前台查看独立站效果</a>
+    </div>
   </div>
 
   <div class="container">
+    <div id="radar-import-anchor" style="display:none; background:rgba(16,185,129,0.12); border:2px solid #10b981; border-radius:16px; padding:20px 24px;">
+      <h2 style="color:#34d399; font-size:17px; margin-bottom:6px;">📡 收到来自「机会雷达 · 选品地图」网站的跨站推送选品！</h2>
+      <p id="radarIncomingDesc" style="font-size:13.5px; color:#e2e8f0; margin-bottom:14px;"></p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="btn" id="btnConfirmRadarIncoming" style="background:#10b981; color:#06281e;">🚀 立即将此选品上架到独立站前台</button>
+        <button class="btn" style="background:#334155; color:#e2e8f0;" onclick="document.getElementById('radar-import-anchor').style.display='none'">暂不上架</button>
+      </div>
+    </div>
 
     <!-- 1. 一键切换品类模板 (验证架构换皮能力) -->
     <div class="card">
@@ -575,6 +586,46 @@
       }
     }
 
+    function initCrossSiteRadarIntegration() {
+      const host = window.location.hostname || '';
+      let radarUrl = '/radar/';
+      if (host.includes('.e2b.app')) {
+        radarUrl = window.location.protocol + '//' + host.replace(/^\d+-/, '8000-');
+      } else if (host === 'localhost' || host === '127.0.0.1') {
+        radarUrl = 'http://127.0.0.1:8000';
+      }
+      const btn = document.getElementById('btnOpenRadarSite');
+      if (btn) btn.href = radarUrl;
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('from_radar') === '1') {
+        const titleZh = params.get('title_zh') || '';
+        const titleEn = params.get('title_en') || titleZh || 'Custom Artisan Gift';
+        const hsCode = params.get('hs_code') || '';
+        const fobUsd = parseFloat(params.get('fob_usd') || '0');
+        const priceUsd = parseFloat(params.get('price_usd') || '') || (fobUsd > 0 ? Math.round(fobUsd * 6.5) : 79);
+        const compareUsd = Math.round(priceUsd * 1.35);
+        const desc = `Selected via Opportunity Radar (HS ${hsCode || 'Custom'}) — ${titleZh}`;
+
+        document.getElementById('newProdTitle').value = titleEn;
+        document.getElementById('newProdPrice').value = priceUsd;
+        document.getElementById('newProdCompare').value = compareUsd;
+        document.getElementById('newProdDesc').value = desc;
+
+        const banner = document.getElementById('radar-import-anchor');
+        const info = document.getElementById('radarIncomingDesc');
+        if (banner && info) {
+          banner.style.display = 'block';
+          info.innerHTML = `选品中文名：<strong>${titleZh}</strong> · 英文上架名：<strong>${titleEn}</strong> · HS编码：<code>${hsCode || 'N/A'}</code> · 计划独立站售价：<strong style="color:#fbbf24;">$${priceUsd}</strong>（划线价 $${compareUsd}）。已同步填入下方商品表单，点击按钮即可一键发布至独立站前台！`;
+          document.getElementById('btnConfirmRadarIncoming').onclick = () => {
+            quickImportRadarItem(titleEn, priceUsd, compareUsd, desc, '/images/hero-board.jpg');
+            banner.style.display = 'none';
+          };
+        }
+      }
+    }
+
+    initCrossSiteRadarIntegration();
     loadAdminData();
   </script>
 </body>
