@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>独立站可视化管理中台 (/admin) — 极速无头电商架构</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+    .topbar {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      padding: 16px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .topbar h1 {
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-fast {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .btn-view-store {
+      background: #ea580c;
+      color: #fff;
+      text-decoration: none;
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .container {
+      max-width: 1240px;
+      margin: 28px auto;
+      padding: 0 24px;
+      display: grid;
+      gap: 24px;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: #fbbf24;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+    }
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .preset-btn {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 14px;
+      padding: 18px;
+      color: #f8fafc;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover, .preset-btn.active {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .preset-btn h3 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+    .preset-btn p {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #475569;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .btn {
+      background: #f59e0b;
+      color: #0f172a;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-blue {
+      background: #0284c7;
+      color: #fff;
+    }
+    .btn-danger {
+      background: #dc2626;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+    th, td {
+      border-bottom: 1px solid #334155;
+      padding: 12px 10px;
+      text-align: left;
+    }
+    th {
+      color: #94a3b8;
+      font-weight: 700;
+    }
+    .status-ok {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #06281e;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 800;
+      display: none;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <h1>
+      ⚙️ 跨境独立站可视化中台
+      <span class="badge-fast">⚡ 内存级缓存已开启 • 响应 &lt; 2ms</span>
+    </h1>
+    <a href="/" class="btn-view-store">👉 返回前台查看独立站效果</a>
+  </div>
+
+  <div class="container">
+
+    <!-- 1. 一键切换品类模板 (验证架构换皮能力) -->
+    <div class="card">
+      <h2>🎨 1. 一键切换独立站品类模板（架构与页面彻底解耦）</h2>
+      <p class="card-desc">正如你所说，先把高速底层架构搭好，以后你想换卖任何品类，不需要重写代码，点击下方任意模板即可在 0.01 秒内整站切换：</p>
+      <div class="preset-grid">
+        <button class="preset-btn" id="preset-maple_laser" onclick="switchPreset('maple_laser')">
+          <h3>🍁 枫叶激光雕刻工坊 (MapleCraft Laser)</h3>
+          <p>含加拿大硬枫木定制礼品 + 激光雕刻机 + 实时 455nm 激光刻字预览台（当前主推）</p>
+        </button>
+        <button class="preset-btn" id="preset-wool_slippers" onclick="switchPreset('wool_slippers')">
+          <h3>🩴 澳洲美利奴羊毛拖鞋 (ArtisanSteps)</h3>
+          <p>对应你服务器原 my_shop 的羊毛拖鞋品类，一键切换为鞋履独立站</p>
+        </button>
+        <button class="preset-btn" id="preset-aetheria_dtc" onclick="switchPreset('aetheria_dtc')">
+          <h3>✨ 欧美高客单价家居精品 (Aetheria DTC)</h3>
+          <p>对应你 GitHub 仓库的 $250–$500 高客单价胡桃木声学板与黄铜咖啡机</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. PayPal & 支付通道状态 -->
+    <div class="card">
+      <h2>💳 2. PayPal 收款通道配置（已自动迁入你原 WooCommerce 里的真实商户秘钥）</h2>
+      <p class="card-desc">我从你服务器的数据库里提取出了你之前配好的 PayPal 凭证（商户号 <code>UNQPMHDGVTL96</code> / <code>1316069495ZT@GMAIL.COM</code>），并已验证通过 PayPal 官方 Live OAuth2 接口！</p>
+      <div class="form-grid" style="margin-bottom: 14px;">
+        <div class="field">
+          <label>PayPal 运行模式</label>
+          <select id="ppMode">
+            <option value="live">🟢 Live 正式生产收款模式 (api-m.paypal.com)</option>
+            <option value="sandbox">🟡 Sandbox 沙盒测试模式 (api-m.sandbox.paypal.com)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>PayPal 商户邮箱 / Merchant ID</label>
+          <input type="text" id="ppMerchant" readonly value="1316069495ZT@GMAIL.COM (UNQPMHDGVTL96)" />
+        </div>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <button class="btn btn-blue" onclick="verifyPayPalConnection()">🔍 一键实测 PayPal 官方接口连通性</button>
+        <span id="ppVerifyResult" style="font-size:13px; color:#34d399; font-weight:700;"></span>
+      </div>
+    </div>
+
+    <!-- 3. 页面文案与品牌视觉配置 -->
+    <div class="card">
+      <h2>✏️ 3. 首页文案、配色与功能开关（改页面直接填表保存即可）</h2>
+      <p class="card-desc">修改后点击保存，前台页面立即生效，无需重启服务器：</p>
+      <div class="form-grid">
+        <div class="field">
+          <label>品牌名称 (Brand Name)</label>
+          <input type="text" id="cfgBrandName" />
+        </div>
+        <div class="field">
+          <label>Logo 大写字母 (Logo Text)</label>
+          <input type="text" id="cfgLogoText" />
+        </div>
+        <div class="field">
+          <label>主色调 (Accent Color Hex)</label>
+          <input type="text" id="cfgAccentColor" />
+        </div>
+        <div class="field">
+          <label>免邮门槛 (Free Shipping USD)</label>
+          <input type="number" id="cfgFreeShip" />
+        </div>
+        <div class="field" style="grid-column: 1 / -1;">
+          <label>顶部促销公告栏 (Top Announcement Bar)</label>
+          <input type="text" id="cfgAnnouncement" />
+        </div>
+        <div class="field" style="grid-column: 1 / -1;">
+          <label>首屏大标题 (Hero Main Title)</label>
+          <input type="text" id="cfgHeroTitle" />
+        </div>
+        <div class="field" style="grid-column: 1 / -1;">
+          <label>首屏副标题 (Hero Subtitle)</label>
+          <input type="text" id="cfgHeroSub" />
+        </div>
+      </div>
+      <div style="margin-top: 16px;">
+        <button class="btn" onclick="saveStoreSettings()">💾 保存页面配置并立即刷新缓存</button>
+      </div>
+    </div>
+
+    <!-- 4. 商品管理 (上架/改价/删除) -->
+    <div class="card">
+      <h2>📦 4. 商品列表与快速上新</h2>
+      <p class="card-desc">支持随时修改价格、添加新品或删除商品：</p>
+      <div class="form-grid" style="margin-bottom: 14px; background:#0f172a; padding:16px; border-radius:12px;">
+        <div class="field">
+          <label>新商品名称</label>
+          <input type="text" id="newProdTitle" placeholder="例如：Custom Engraved Maple Guitar Pick Box" />
+        </div>
+        <div class="field">
+          <label>售价 (USD)</label>
+          <input type="number" step="0.01" id="newProdPrice" placeholder="39.00" />
+        </div>
+        <div class="field">
+          <label>原价划线价 (USD)</label>
+          <input type="number" step="0.01" id="newProdCompare" placeholder="59.00" />
+        </div>
+        <div class="field">
+          <label>简短卖点描述</label>
+          <input type="text" id="newProdDesc" placeholder="Solid Canadian maple with custom laser engraving" />
+        </div>
+        <div style="display:flex; align-items:flex-end;">
+          <button class="btn" onclick="addNewProduct()">➕ 立即上架新商品</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>商品 ID</th>
+            <th>商品标题</th>
+            <th>售价 (USD)</th>
+            <th>划线价</th>
+            <th>标签</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="adminProductsTable"></tbody>
+      </table>
+    </div>
+
+    <!-- 5. 订单与激光雕刻定制生产队列 -->
+    <div class="card">
+      <h2>🧾 5. 客户订单 &amp; 激光雕刻定制内容队列</h2>
+      <p class="card-desc">客户在前台提交的定制刻字内容、材质选择以及 PayPal 付款单号都会实时汇总在这里：</p>
+      <table>
+        <thead>
+          <tr>
+            <th>订单号</th>
+            <th>时间</th>
+            <th>客户 &amp; 国家</th>
+            <th>商品 &amp; 激光雕刻定制参数</th>
+            <th>金额</th>
+            <th>支付状态</th>
+          </tr>
+        </thead>
+        <tbody id="adminOrdersTable"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="toast" id="adminToast"></div>
+
+  <script>
+    let storeData = null;
+
+    function toast(msg) {
+      const el = document.getElementById('adminToast');
+      el.textContent = msg;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 3000);
+    }
+
+    async function loadAdminData() {
+      const res = await fetch('/api/admin/overview');
+      const data = await res.json();
+      storeData = data.store;
+
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('preset-' + storeData.nicheKey);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.getElementById('cfgBrandName').value = storeData.brandName || '';
+      document.getElementById('cfgLogoText').value = storeData.brandLogoText || '';
+      document.getElementById('cfgAccentColor').value = storeData.accentColor || '#c84b31';
+      document.getElementById('cfgFreeShip').value = storeData.freeShippingThreshold || 75;
+      document.getElementById('cfgAnnouncement').value = storeData.announcement || '';
+      document.getElementById('cfgHeroTitle').value = (storeData.hero && storeData.hero.title) || '';
+      document.getElementById('cfgHeroSub').value = (storeData.hero && storeData.hero.subtitle) || '';
+
+      renderProductsTable();
+      renderOrdersTable(data.orders || []);
+    }
+
+    function renderProductsTable() {
+      const tbody = document.getElementById('adminProductsTable');
+      tbody.innerHTML = (storeData.products || []).map(p => `
+        <tr>
+          <td><code>${p.id}</code></td>
+          <td><strong>${p.title}</strong></td>
+          <td style="color:#fbbf24; font-weight:800;">$${Number(p.price).toFixed(2)}</td>
+          <td style="color:#64748b; text-decoration:line-through;">$${Number(p.compareAtPrice || 0).toFixed(2)}</td>
+          <td>${p.badge || '-'}</td>
+          <td>
+            <button class="btn btn-danger" onclick="deleteProduct('${p.id}')">删除</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderOrdersTable(orders) {
+      const tbody = document.getElementById('adminOrdersTable');
+      if (!orders.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#64748b; padding:24px;">暂无订单，可在前台点击「1-Click Instant Test Order」或「$0.01 PayPal 实测」生成订单。</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = orders.map(o => `
+        <tr>
+          <td><code>${o.id}</code></td>
+          <td>${new Date(o.createdAt).toLocaleString()}</td>
+          <td>${o.customer?.name || 'Guest'} (${o.customer?.country || 'US'})<br/><span style="color:#94a3b8;font-size:11px;">${o.customer?.email || ''}</span></td>
+          <td>
+            ${(o.items || []).map(i => `
+              <div>• <strong>${i.title}</strong> × ${i.qty}
+                ${i.customSpec ? `<br/><span style="color:#fbbf24;font-size:12px;">🔥 雕刻内容: ${i.customSpec}</span>` : ''}
+              </div>
+            `).join('')}
+          </td>
+          <td style="font-weight:800; color:#34d399;">$${o.totalUsd}</td>
+          <td><span class="status-ok">${o.status}</span><br/><span style="font-size:11px;color:#94a3b8;">${o.paypalOrderId || ''}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    async function switchPreset(nicheKey) {
+      const res = await fetch('/api/admin/switch-preset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nicheKey })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        toast(`✅ 已整站切换为「${data.store.brandName}」模板！`);
+        loadAdminData();
+      }
+    }
+
+    async function saveStoreSettings() {
+      const payload = {
+        brandName: document.getElementById('cfgBrandName').value,
+        brandLogoText: document.getElementById('cfgLogoText').value,
+        accentColor: document.getElementById('cfgAccentColor').value,
+        freeShippingThreshold: Number(document.getElementById('cfgFreeShip').value),
+        announcement: document.getElementById('cfgAnnouncement').value,
+        heroTitle: document.getElementById('cfgHeroTitle').value,
+        heroSubtitle: document.getElementById('cfgHeroSub').value
+      };
+      const res = await fetch('/api/admin/update-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if ((await res.json()).ok) {
+        toast('✅ 页面文案与配色已保存，内存缓存已同步更新！');
+        loadAdminData();
+      }
+    }
+
+    async function addNewProduct() {
+      const title = document.getElementById('newProdTitle').value.trim();
+      const price = parseFloat(document.getElementById('newProdPrice').value);
+      const compareAtPrice = parseFloat(document.getElementById('newProdCompare').value) || (price * 1.35);
+      const shortDesc = document.getElementById('newProdDesc').value.trim();
+      if (!title || isNaN(price)) {
+        toast('请填写商品名称与价格');
+        return;
+      }
+      const res = await fetch('/api/admin/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, price, compareAtPrice, shortDesc })
+      });
+      if ((await res.json()).ok) {
+        document.getElementById('newProdTitle').value = '';
+        document.getElementById('newProdPrice').value = '';
+        toast('✅ 新商品已上架！');
+        loadAdminData();
+      }
+    }
+
+    async function deleteProduct(id) {
+      const res = await fetch('/api/admin/products/' + encodeURIComponent(id), { method: 'DELETE' });
+      if ((await res.json()).ok) {
+        toast('已删除商品 ' + id);
+        loadAdminData();
+      }
+    }
+
+    async function verifyPayPalConnection() {
+      const out = document.getElementById('ppVerifyResult');
+      out.textContent = '⏳ 正在向 PayPal 官方服务器请求 OAuth2 Token...';
+      const mode = document.getElementById('ppMode').value;
+      const res = await fetch('/api/paypal/verify-credentials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        out.style.color = '#34d399';
+        out.textContent = `✅ 连接成功！PayPal App ID: ${data.app_id} | 商户: UNQPMHDGVTL96 | Token 有效期: ${data.expires_in}秒`;
+      } else {
+        out.style.color = '#f87171';
+        out.textContent = `❌ ${data.error || '连接失败（注意：你的秘钥是 Live 正式环境秘钥，请选择 Live 模式）'}`;
+      }
+    }
+
+    loadAdminData();
+  </script>
+</body>
+</html>

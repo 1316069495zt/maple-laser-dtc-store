@@ -1,0 +1,14 @@
+{
+  "name": "maple-laser-dtc-store",
+  "version": "2.0.0",
+  "description": "High-Speed Headless Cross-Border DTC E-Commerce Engine (MapleCraft Laser Studio) with Real PayPal Orders v2 API, Live Laser Engraving Customizer & Visual Admin CMS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}
